@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<title>A11y Website Checker Demo</title>
+		<link rel="stylesheet" href="css/styles.css">
+	</head>
+	<body>
+		<div class="module module-a11y-checker">
+
+			<div class="module-a11y-checker-container">
+				<header class="module-header">
+					<h1>Test Your Site&#8217;s Accessibility</h1>
+				</header>
+			</div>
+
+			<div class="module-a11y-checker-container module-a11y-checker-container--narrow">
+
+				<p>Enter your URL for a free accessibility scan. This audit will quickly determine if your website meets basic legal standards.</p>
+
+				<form class="a11y-website-checker-form shown" id="a11yWebsiteChecker">
+					<input type="text" value="" class="form-input" placeholder="Enter a url..." />
+					<button class="button button--coral form-submit" id="a11yWebsiteCheckerBtn" data-nonce="<?php echo wp_create_nonce('a11y-website-checker'); ?>">Start Scan!</button>
+				</form>
+
+				<div class="a11y-website-checker-loading-bar" aria-live="polite" tabindex="0">
+					<img src="images/loading.svg" alt="loading" aria-hidden="true" />
+					<span class="loading-text" id="loadingText">Starting analysis...</span>
+				</div>
+			</div>
+
+			<div class="module-a11y-checker-container">
+				<div id="a11yResults" class="a11y-website-checker-results">
+
+					<div class="results-website-image">
+						<img src="" alt="website image" />
+					</div>
+
+					<div class="results-content" tabindex="0">
+						<div class="results-content-header">
+							<h3>Results for: <span class="website-name"></span></h3>
+						</div>
+						<div class="results-content-body">
+							<div class="results-score" style="display:none"></div>
+							<p class="results-text"></p>
+							<p>According to WCAG 2.0 AA guidelines, there were <span id="passCount"></span> passes and <span id="failCount"></span> violations. Contact us below for more information on how to improve your score!</p>
+							<a href="/contact" class="button button-primary" target="_blank">Contact Us</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div aria-hidden="true">
+				<div id="app" class="a11y-website-checker-app-frame" style="position: absolute;z-index:-100;opacity: 0;pointer-events: none;"></div>
+			</div>
+
+
+			<script type="text/javascript">
+                var wwA11yVars = {
+                    resultsText: {
+                        perfect: 'Congrats! Your website scored <b>a perfect score</b>! Nothing more to do at the moment. ',
+                        pass: 'Congrats! Your website scored <b>above average</b>! However, there are still a few areas for improvement. ',
+                        fail: 'Unfortunately, your website scored <b>below average</b>. However, we can improve this!',
+                    },
+                };
+			</script>
+
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript" defer=""></script>
+		<script src="js/axe.min.js" type="text/javascript" defer=""></script>
+		<script src="js/scripts.js" type="text/javascript" defer=""></script>
+	</body>
+</html>
