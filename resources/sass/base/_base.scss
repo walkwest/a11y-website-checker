@@ -1,0 +1,18 @@
+html {
+    font-size: 62.5%; // Set rem value as Base 10 for ease of entering pixel values from comp while sticking with relative units (62.5% * 16px = 10px)
+}
+
+body {
+    background: linear-gradient(155deg, rgba(11,12,18,1) 20%, rgba(39,56,75,1) 98%);
+    font-size: 1.6rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}

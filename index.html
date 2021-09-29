@@ -2,58 +2,100 @@
 <html>
 	<head>
 		<title>A11y Website Checker Demo</title>
-		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="dist/css/styles.css">
 	</head>
 	<body>
 		<div class="module module-a11y-checker">
 
+<!--			<div class="module-a11y-checker-container module-a11y-checker-container&#45;&#45;narrow">-->
+
+<!--				<header class="module-header">-->
+<!--					<h1>Test Your Site&#8217;s Accessibility</h1>-->
+<!--					<p class="instructions">Enter your URL for a free accessibility scan. This audit will quickly determine if your website meets basic legal standards.</p>-->
+<!--				</header>-->
+
+<!--				<form class="a11y-website-checker-form shown" id="a11yWebsiteChecker">-->
+<!--					<input type="text" value="" class="form-input" placeholder="Enter a website url..." />-->
+<!--					<button class="button button&#45;&#45;primary form-submit" id="a11yWebsiteCheckerBtn">-->
+<!--						<span class="visually-hidden">Scan now</span>-->
+<!--						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" x="0px" y="0px"><path d="M67.34,15.9a3.55,3.55,0,1,0-5,5L87.85,46.44H3.53a3.56,3.56,0,0,0,0,7.11H87.85L62.3,79.06a3.62,3.62,0,0,0,0,5,3.53,3.53,0,0,0,5,0l31.6-31.6a3.47,3.47,0,0,0,0-5Z" fill="currentColor"/></svg>-->
+<!--					</button>-->
+<!--				</form>-->
+<!--			</div>-->
+
+<!--			<div class="a11y-website-checker-loading-bar" aria-live="polite" tabindex="0">-->
+<!--				<img src="resources/images/loading.svg" alt="loading" aria-hidden="true" />-->
+<!--				<span class="loading-text" id="loadingText">Warming up the scanner...</span>-->
+<!--			</div>-->
+
 			<div class="module-a11y-checker-container">
-				<header class="module-header">
-					<h1>Test Your Site&#8217;s Accessibility</h1>
-				</header>
-			</div>
+				<div id="a11yResults" class="a11y-website-checker-results" style="display:none">
 
-			<div class="module-a11y-checker-container module-a11y-checker-container--narrow">
+					<header class="module-header">
+						<h1>Your Accessibility Score</h1>
+					</header>
 
-				<p>Enter your URL for a free accessibility scan. This audit will quickly determine if your website meets basic legal standards.</p>
-
-				<form class="a11y-website-checker-form shown" id="a11yWebsiteChecker">
-					<input type="text" value="" class="form-input" placeholder="Enter a url..." />
-					<button class="button button--coral form-submit" id="a11yWebsiteCheckerBtn" data-nonce="<?php echo wp_create_nonce('a11y-website-checker'); ?>">Start Scan!</button>
-				</form>
-
-				<div class="a11y-website-checker-loading-bar" aria-live="polite" tabindex="0">
-					<img src="images/loading.svg" alt="loading" aria-hidden="true" />
-					<span class="loading-text" id="loadingText">Starting analysis...</span>
-				</div>
-			</div>
-
-			<div class="module-a11y-checker-container">
-				<div id="a11yResults" class="a11y-website-checker-results">
-
-					<div class="results-website-image">
-						<img src="" alt="website image" />
-					</div>
-
-					<div class="results-content" tabindex="0">
-						<div class="results-content-header">
-							<h3>Results for: <span class="website-name"></span></h3>
+					<div class="results-overview">
+						<div class="results-overview-image">
+							<img src="http://placehold.it/1200x768" alt="screenshot" />
 						</div>
-						<div class="results-content-body">
-							<div class="results-score" style="display:none"></div>
-							<p class="results-text"></p>
-							<p>According to WCAG 2.0 AA guidelines, there were <span id="passCount"></span> passes and <span id="failCount"></span> violations. Contact us below for more information on how to improve your score!</p>
-							<a href="/contact" class="button button-primary" target="_blank">Contact Us</a>
+						<div class="results-overview-content" tabindex="0">
+							<div class="results-score pass">90%</div>
+							<div class="results-website-name">walkwest.com</div>
 						</div>
 					</div>
 
+					<div class="instructions">
+						Congratulations! Your website scored higher than most. We analyzed your website against WCAG 2.1 AA guidelines which is the standard for ADA compliance. See the full list of results below.
+					</div>
+
+					<div class="a11y-website-checker-report">
+						<header class="report-header">
+							Results
+						</header>
+
+						<div class="report-body">
+							<div class="report-category">
+								<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#violations" aria-expanded="true" aria-controls="violations">
+									Violations
+								</button>
+								<div class="collapse show" id="violations">
+									<div class="report-category-dropdown-body">
+										<ul class="report-category-items">
+											<li><span class="impact-label critical">Critical</span>Required ARIA attributes must be provided</li>
+											<li><span class="impact-label serious">Serious</span>Page must have means to bypass repeated blocks</li>
+											<li><span class="impact-label serious">Serious</span>Elements must have sufficient color contrast</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="report-category">
+								<button class="report-category-dropdown-button button dropdown-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#passes" aria-expanded="false" aria-controls="passes">
+									Passes
+								</button>
+								<div class="collapse" id="passes">
+									<div class="report-category-dropdown-body">
+										Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+									</div>
+								</div>
+							</div>
+
+							<div class="report-category">
+								<button class="report-category-dropdown-button button dropdown-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#incomplete" aria-expanded="false" aria-controls="incomplete">
+									Incomplete
+								</button>
+								<div class="collapse" id="incomplete">
+									<div class="report-category-dropdown-body">
+										Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
-
-			<div aria-hidden="true">
-				<div id="app" class="a11y-website-checker-app-frame" style="position: absolute;z-index:-100;opacity: 0;pointer-events: none;"></div>
-			</div>
-
 
 			<script type="text/javascript">
                 var wwA11yVars = {
@@ -67,7 +109,7 @@
 
 		</div>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript" defer=""></script>
-		<script src="js/axe.min.js" type="text/javascript" defer=""></script>
-		<script src="js/scripts.js" type="text/javascript" defer=""></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+		<script src="resources/js/scripts.js" type="text/javascript" defer=""></script>
 	</body>
 </html>

@@ -1,8 +1,3 @@
-/**
- * Copyright (C) 2019-2021 Walk West <dev@walkwest.com>
- * Cannot be copied, modified and/or distributed without the express permission of Walk West.
- */
-
 (function($) {
     $(document).ready(function() {
 

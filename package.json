@@ -1,0 +1,28 @@
+{
+  "name": "a11y-website-checker",
+  "version": "1.0.0",
+  "description": "A simple UI that allows a user to input their website URL and check the accessibility. After analysis, the tool gives a very basic score - Perfect, Pass, or Fail.",
+  "main": "index.js",
+  "scripts": {
+    "scss": "gulp sass"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walkwest/a11y-website-checker.git"
+  },
+  "author": "Robert Povelones <rpovelones@walkwest.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/walkwest/a11y-website-checker/issues"
+  },
+  "homepage": "https://github.com/walkwest/a11y-website-checker#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.1",
+    "popper.js": "^1.16.1"
+  }
+}

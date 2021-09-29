@@ -1,0 +1,132 @@
+.a11y-website-checker-results {
+    min-height: 100vh;
+    padding: 5rem 0;
+}
+
+.a11y-website-checker-report {
+    background: white;
+    border-radius: 18px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.report-header {
+    background: linear-gradient(173deg, #ff7062 0%, #ae4b42 100%);
+    //background: linear-gradient(173deg, #225386 0%, #214193 100%);
+    color: white;
+    font-size: 2rem;
+    padding: 2rem;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 15px 15px 0 0;
+}
+
+.report-body {
+    padding: 3rem;
+}
+
+.results-overview {
+    margin-bottom: 8rem;
+
+    @include media-breakpoint-up(lg) {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.results-overview-image {
+    @include make-col-ready();
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    z-index: 5;
+
+    @include media-breakpoint-up(lg) {
+        width: 50%;
+    }
+}
+
+.results-overview-content {
+    background: white;
+    border-radius: 0 15px 15px 0;
+    padding: 4rem;
+    width: 100%;
+}
+
+.results-score {
+    font-size: 10rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+
+    &.pass {
+        color: $teal-600;
+    }
+}
+
+.results-website-name {
+    font-size: 2rem;
+}
+
+.report-category {
+    margin-bottom: 3rem;
+}
+
+.report-category-dropdown-button {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    text-align: left;
+    position: relative;
+
+    &::after {
+        border-top: 0.4em solid;
+        border-right: 0.35em solid transparent;
+        border-bottom: 0;
+        border-left: 0.35em solid transparent;
+        position: absolute;
+        right: 2rem;
+        top: 47%;
+    }
+
+    &:not(.collapsed)::after {
+        border-top: 0;
+        border-bottom: 0.4em solid;
+    }
+}
+
+.report-category-dropdown-body {
+    padding: 2rem 0;
+}
+
+.impact-label {
+    background: $red-500;
+    display: inline-block;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: .25rem;
+    border-radius: 20px;
+    margin-right: 1rem;
+    min-width: 100px;
+    text-align: center;
+    text-transform: uppercase;
+
+    &.critical {
+        background: $red-500;
+    }
+
+    &.serious {
+        background: $orange-500;
+    }
+}
+
+.report-category-items {
+    list-style: none;
+    padding: 0;
+
+    li {
+        border-bottom: 1px solid $gray-300;
+        padding: 1rem 0;
+    }
+}

@@ -1,0 +1,25 @@
+.module-a11y-checker-container {
+    @include make-container();
+    max-width: 1170px;
+}
+
+.module-a11y-checker-container--narrow {
+    max-width: 1000px;
+}
+
+.module-header {
+    color: white;
+    margin-bottom: 5rem;
+    text-align: center;
+
+    h1 {
+        font-size: 7rem;
+    }
+}
+
+.instructions {
+    color: white;
+    max-width: 700px;
+    margin: 0 auto 8rem;
+    text-align: center;
+}

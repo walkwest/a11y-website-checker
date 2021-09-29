@@ -1,0 +1,8 @@
+.button {
+    @include button-size( .5rem, 2rem, 1.8rem, 0 );
+    @include button-variant( $gray-300, transparent );
+}
+
+.button--primary {
+    @include button-variant( map-get($theme-colors, primary), transparent );
+}
