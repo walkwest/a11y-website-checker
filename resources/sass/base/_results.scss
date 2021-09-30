@@ -1,6 +1,10 @@
 .a11y-website-checker-results {
     min-height: 100vh;
     padding: 5rem 0;
+
+    &.shown {
+        display: block !important;
+    }
 }
 
 .a11y-website-checker-report {

@@ -7287,6 +7287,11 @@ img {
     background-color: #ff7062;
     border-color: transparent; }
 
+.a11y-form-screen {
+  display: none; }
+  .a11y-form-screen.shown {
+    display: block; }
+
 .a11y-website-checker-form {
   width: 100%;
   display: flex; }
@@ -7341,6 +7346,8 @@ img {
 .a11y-website-checker-results {
   min-height: 100vh;
   padding: 5rem 0; }
+  .a11y-website-checker-results.shown {
+    display: block !important; }
 
 .a11y-website-checker-report {
   background: white;
