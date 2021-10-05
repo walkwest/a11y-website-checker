@@ -1,3 +1,9 @@
 $theme-colors: (
     primary: #ff7062,
-)
+);
+
+$tooltip-font-size: 1.4rem;
+$tooltip-border-radius: 0;
+$tooltip-padding-y: 1.5rem;
+$tooltip-padding-x: 2rem;
+$tooltip-max-width: 300px;

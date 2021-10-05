@@ -35,6 +35,15 @@ var Utils = {
 
         return !!pattern.test(str);
     },
+
+    /**
+     * Converts a string to html entities.
+     * @param str
+     * @returns {string}
+     */
+    htmlEntities(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
 }
 
 /**
@@ -50,6 +59,11 @@ var A11yWebsiteChecker = function( $el ) {
     this.$initialScreen = $('#a11yFormScreen');
     this.$results = $('#a11yResults');
     this.appHasError = false;
+    this.loadingAnimationComplete = false;
+
+    this.resultData = {};
+    this.websiteUrl = '';
+    this.score = 0;
 }
 
 /**
@@ -79,7 +93,7 @@ A11yWebsiteChecker.prototype = {
         this.$loadingBar.show().focus();
 
         setTimeout(() => {
-            this.maybeShowLoadingText('Analyzing headings...');
+            this.maybeShowLoadingText('Analyzing website...');
         }, 2000);
 
         setTimeout(() => {
@@ -87,112 +101,148 @@ A11yWebsiteChecker.prototype = {
         }, 4000);
 
         setTimeout(() => {
-            if (!this.appHasError) {
-                this.$loadingBar.hide();
-                this.$results.addClass('shown').find('.results-content').focus();
-            }
+            this.maybeShowLoadingText('Processing results...');
         }, 6000);
+
+        setTimeout(() => {
+            if (!this.appHasError) {
+                this.loadingAnimationComplete = true;
+                this.showResultsScreen();
+            }
+        }, 8000);
+
+        // For debug
+        // this.$loadingBar.hide();
+        // this.$results.addClass('shown').find('.results-content').focus();
 
     },
 
     /**
-     * Update placeholder image in results panel from 3rd
-     * party service.
+     * Update placeholder image in results panel
      */
-    swapPlaceholderImg() {
-        var width = '700',
-            height = '760',
-            service = 'https://image.thum.io/get/width/' + width + '/crop/' + height + '/',
-            website = websiteURLWithPrefix();
-
-        // results in an image 1200x780 -> resized down to 700px wide
-        this.$results
-            .find('img')
-            .attr('src', service + website)
-            .attr('alt', 'screenshot for ' + website);
+    swapPlaceholderImg(src) {
+        this.$results.find('.results-overview-image img').attr('src', src).attr('alt', 'screenshot for ' + this.websiteUrl);
     },
 
     /**
      * Calculate the score.
      *
-     * @param passes
-     * @param fails
      * @returns {{output: string, raw: number}}
      */
-    calcScore(passes, fails) {
-        var valPasses = parseInt(passes),
-            valFails = parseInt(fails),
+    calcScore() {
+        var valPasses = this.resultData.passes.length,
+            valFails = this.resultData.violations.length,
             total = valPasses + valFails,
-            score = (valPasses / total) * 100;
-        return {
+            score = (valPasses / total) * 100,
+            label = 'bad';
+
+        if (score === 100) {
+            label = 'perfect';
+        } else if (score >= 90) {
+            label = 'good';
+        } else if (score < 90 && score >= 80) {
+            label = 'average';
+        }
+
+        this.score = {
             raw: score,
+            label,
             output: parseInt(score) + '%',
         };
+
+        return this.score;
     },
 
     /**
-     * Get the results text.
-     * Managed in a window variable set in PHP.
-     *
-     * @param score
-     * @returns {string}
+     * Show the results screen.
      */
-    getResultsText(score) {
-        var $scoreEl = $results.find('.results-score');
+    showResultsScreen() {
+        this.$loadingBar.hide();
+        this.$results.addClass('shown').find('.results-content').focus();
+    },
 
-        if (score.raw === 100) {
-            this.$scoreEl.addClass('pass');
-            return wwA11yVars.resultsText.perfect;
-        } else if (score.raw >= 80) {
-            this.$scoreEl.addClass('pass');
-            return wwA11yVars.resultsText.pass;
-        } else {
-            this.$scoreEl.addClass('fail');
-            return wwA11yVars.resultsText.fail;
+    /**
+     * Display all the results and update the UI.
+     */
+    displayResults() {
+        var text = wwA11yVars.resultsText[this.score.label];
+
+        // Set app data
+        this.resultData = data;
+        this.websiteUrl = url;
+
+        // Check if loading animation is complete
+        if ( this.loadingAnimationComplete ) {
+            this.showResultsScreen();
         }
-    },
 
-    /**
-     * Display the results.
-     * @param results
-     */
-    displayResults(results) {
-        var passes = results.passes.length,
-            fails = results.violations.length,
-            score = calcScore(passes, fails);
+        // Run methods
+        this.swapPlaceholderImg(data.screenshots.desktop);
+        this.calcScore();
+        this.formatResultCategories();
 
         // append text
-        this.$results.find('.website-name').text(websiteURLWithPrefix());
-        this.$results.find('.results-score').text(score.output);
-        this.$results.find('.results-text').html(getResultsText(score));
-        $('#passCount').html(passes);
-        $('#failCount').html(fails);
+        this.$results.addClass('score-' + this.score.label);
+        this.$results.find('.results-website-name').text(this.websiteUrl);
+        this.$results.find('.results-score').text(this.score.output);
+        this.$results.find('.results-description').html(text.label);
+        this.$results.find('.instructions').html(text.text);
     },
 
     /**
-     * Kick off the analysis with an ajax request to the server
-     * which will provide the scraped website html.
+     * Get result item html for report table.
+     * @param data
+     * @returns {string}
+     */
+    getResultItemHtml(data, impactOverride = null) {
+        var desc = Utils.htmlEntities(data.description),
+            impact = impactOverride ? impactOverride : Utils.htmlEntities(data.impact),
+            link = Utils.htmlEntities(data.helpUrl),
+            iconLinkOffsite = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></svg>`,
+            html = '';
+
+        return `<li>
+            <span class="impact-label ${impact}">${impact} </span>
+            ${desc}
+            <a href="${link}" class="link-offsite" target="_blank" rel="noopener">
+                <span class="visually-hidden">Learn more (offsite)</span>
+                ${iconLinkOffsite}
+            </a>
+        </li>`;
+    },
+
+    /**
+     * Format result category data table.
+     */
+    formatResultCategories() {
+        this.resultData.violations.forEach(item => {
+            $('#violations ul').append(this.getResultItemHtml(item));
+        });
+
+        this.resultData.passes.forEach(item => {
+            $('#passes ul').append(this.getResultItemHtml(item, 'pass'));
+        });
+
+        this.resultData.incomplete.forEach(item => {
+            $('#incomplete ul').append(this.getResultItemHtml(item));
+        });
+    },
+
+    /**
+     * Kick off the analysis with an ajax request to the server.
      */
     runAnalysis(url) {
         // do ajax request to server to scrape website and return html
-        $.ajax( 'http://localhost:3000/accessibility/scan/'+url, {
+        $.ajax( 'http://localhost:3000/accessibility/scan/' + encodeURIComponent(url), {
             method: 'GET',
-        }).done(function(data){
-            if ( data.length === 0 || data === 'error' ) {
-                this.appHasError = true;
-                alert('Apologies, there was a problem loading that website.');
-            }
-            else if ( data === 'empty' ) {
-                this.appHasError = true;
-                alert('Please enter a website!');
-            }
-            else {
-                this.appHasError = false;
-                // load screenshot
-                // swapPlaceholderImg();
-                // run test
-                console.log(data);
-            }
+        }).done((data) => {
+            this.appHasError = false;
+            this.displayResults();
+        }).fail(error => {
+            console.log(error);
+            this.appHasError = true;
+            alert('Apologies, there has been an error. Please try again later.');
+            location.reload();
         });
     }
 
@@ -203,15 +253,22 @@ A11yWebsiteChecker.prototype = {
  */
 $(document).ready(function() {
 
+    /**
+     * Initialize App
+     * @type {A11yWebsiteChecker}
+     */
     var App = new A11yWebsiteChecker( $('#a11yWebsiteChecker') );
 
+    /**
+     * Listen for form submit to kickoff the app.
+     */
     App.$form.on('submit', function(e) {
-        var url = $('.form-input').val();
+        var url = Utils.urlWithPrefix( $('.form-input').val() );
 
         e.preventDefault();
 
         // return early if URL is not valid
-        if ( ! Utils.isValidURL( Utils.urlWithPrefix(url) ) ) {
+        if ( ! Utils.isValidURL(url) ) {
             alert('It appears there is something wrong with the URL you entered. Please check and try again.');
             return;
         }
@@ -220,7 +277,23 @@ $(document).ready(function() {
         App.initLoading();
 
         // start analysis
-        App.runAnalysis( encodeURIComponent(url) ) ;
+        App.runAnalysis(url) ;
+    });
+
+    /**
+     * Load App to window variable for ease of interaction.
+     * @type {A11yWebsiteChecker}
+     */
+    window.A11yWebsiteChecker = App;
+
+    /**
+     * Bootstrap Tooltips
+     */
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            html: true,
+        })
     });
 
 });

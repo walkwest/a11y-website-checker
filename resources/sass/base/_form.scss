@@ -35,10 +35,15 @@
 .a11y-website-checker-loading-bar {
     text-align: center;
     color: white;
+    outline: none;
 
     img {
         width: 150px;
         display: block;
         margin: 0 auto 2rem auto;
+    }
+
+    .loading-text {
+        font-size: 2.4rem;
     }
 }
