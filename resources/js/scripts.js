@@ -1,15 +1,16 @@
 /**
  * Utility functions
  */
-var Utils = {
+const Utils = {
     /**
      * Update url string with http if not present.
      *
      * @returns {string}
      */
     urlWithPrefix(url) {
-        var url = encodeURI(url),
-            defaultPrefix = 'http://';
+        const defaultPrefix = 'http://';
+
+        url = encodeURI(url)
 
         // Prepend http if http|https is not present
         if (!url.startsWith('http') && !url.startsWith('https')) {
@@ -26,7 +27,7 @@ var Utils = {
      * @returns {boolean}
      */
     isValidURL(str) {
-        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
             '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
@@ -130,11 +131,12 @@ A11yWebsiteChecker.prototype = {
      * @returns {{output: string, raw: number}}
      */
     calcScore() {
-        var valPasses = this.resultData.passes.length,
+        const valPasses = this.resultData.passes.length,
             valFails = this.resultData.violations.length,
             total = valPasses + valFails,
-            score = (valPasses / total) * 100,
-            label = 'bad';
+            score = (valPasses / total) * 100;
+
+        let label = 'bad';
 
         if (score === 100) {
             label = 'perfect';
@@ -165,11 +167,8 @@ A11yWebsiteChecker.prototype = {
      * Display all the results and update the UI.
      */
     displayResults() {
-        var text = wwA11yVars.resultsText[this.score.label];
-
-        // Set app data
-        this.resultData = data;
-        this.websiteUrl = url;
+        const score = this.calcScore(),
+            resultsText = wwA11yVars.resultsText[score.label];
 
         // Check if loading animation is complete
         if ( this.loadingAnimationComplete ) {
@@ -177,16 +176,15 @@ A11yWebsiteChecker.prototype = {
         }
 
         // Run methods
-        this.swapPlaceholderImg(data.screenshots.desktop);
-        this.calcScore();
+        this.swapPlaceholderImg(this.resultData.screenshots.desktop);
         this.formatResultCategories();
 
         // append text
-        this.$results.addClass('score-' + this.score.label);
+        this.$results.addClass('score-' + score.label);
         this.$results.find('.results-website-name').text(this.websiteUrl);
-        this.$results.find('.results-score').text(this.score.output);
-        this.$results.find('.results-description').html(text.label);
-        this.$results.find('.instructions').html(text.text);
+        this.$results.find('.results-score').text(score.output);
+        this.$results.find('.results-description').html(resultsText.label);
+        this.$results.find('.instructions').html(resultsText.text);
     },
 
     /**
@@ -195,7 +193,7 @@ A11yWebsiteChecker.prototype = {
      * @returns {string}
      */
     getResultItemHtml(data, impactOverride = null) {
-        var desc = Utils.htmlEntities(data.description),
+        const desc = Utils.htmlEntities(data.description),
             impact = impactOverride ? impactOverride : Utils.htmlEntities(data.impact),
             link = Utils.htmlEntities(data.helpUrl),
             iconLinkOffsite = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></svg>`,
@@ -237,6 +235,8 @@ A11yWebsiteChecker.prototype = {
             method: 'GET',
         }).done((data) => {
             this.appHasError = false;
+            this.resultData = data;
+            this.websiteUrl = url;
             this.displayResults();
         }).fail(error => {
             console.log(error);
@@ -257,13 +257,13 @@ $(document).ready(function() {
      * Initialize App
      * @type {A11yWebsiteChecker}
      */
-    var App = new A11yWebsiteChecker( $('#a11yWebsiteChecker') );
+    const App = new A11yWebsiteChecker( $('#a11yWebsiteChecker') );
 
     /**
      * Listen for form submit to kickoff the app.
      */
     App.$form.on('submit', function(e) {
-        var url = Utils.urlWithPrefix( $('.form-input').val() );
+        const url = Utils.urlWithPrefix( $('.form-input').val() );
 
         e.preventDefault();
 
@@ -289,11 +289,11 @@ $(document).ready(function() {
     /**
      * Bootstrap Tooltips
      */
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map( (tooltipTriggerEl) => {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
             html: true,
-        })
+        });
     });
 
 });
