@@ -1,0 +1,27 @@
+.a11y-form-screen {
+    display: none;
+
+    &.shown {
+        display: block;
+    }
+}
+
+.a11y-website-checker-form {
+    width: 100%;
+    display: flex;
+}
+
+.a11y-website-checker-loading-bar {
+    text-align: center;
+    outline: none;
+
+    img {
+        width: 60px;
+        display: block;
+        margin: 0 auto 2rem auto;
+    }
+}
+
+.instructions {
+    margin-bottom: 4rem;
+}

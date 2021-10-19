@@ -1,0 +1,195 @@
+.a11y-website-checker-results {
+    padding: 0 0 5rem 0;
+
+    &.shown {
+        display: block !important;
+    }
+}
+
+.report-header {
+    background: #eee;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 2rem;
+}
+
+.report-body {
+    padding: 3rem;
+}
+
+.results-overview {
+    margin-bottom: 8rem;
+
+    @include media-breakpoint-up(lg) {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.results-overview-image {
+    @include make-col-ready();
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    z-index: 5;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 50%;
+    }
+}
+
+.results-overview-content {
+    padding: 4rem;
+    position: relative;
+    width: 100%;
+
+    .score-perfect &,
+    .score-good & {
+        color: $teal-600;
+    }
+
+    .score-average & {
+        color: #b44e44;
+    }
+
+    .score-bad & {
+        color: $red-500;
+    }
+}
+
+.results-description {
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.results-score {
+    font-size: 10rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0;
+}
+
+.results-website-name {
+    font-size: 2rem;
+}
+
+.report-category {
+    margin-bottom: 3rem;
+}
+
+.report-category-dropdown-button {
+    width: 100%;
+    padding: 1rem 2rem;
+    text-align: left;
+    position: relative;
+
+    &::after {
+        border-top: 0.4em solid;
+        border-right: 0.35em solid transparent;
+        border-bottom: 0;
+        border-left: 0.35em solid transparent;
+        position: absolute;
+        right: 2rem;
+        top: 47%;
+    }
+
+    &:not(.collapsed)::after {
+        border-top: 0;
+        border-bottom: 0.4em solid;
+    }
+}
+
+.report-category-dropdown-body {
+    padding: 2rem 0;
+}
+
+.impact-label {
+    background: $gray-400;
+    display: inline-block;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: .25rem;
+    border-radius: 20px;
+    margin-right: 1rem;
+    min-width: 100px;
+    text-align: center;
+    text-transform: uppercase;
+
+    &.critical {
+        background: $red-700;
+    }
+
+    &.serious {
+        background: $red-600;
+    }
+
+    &.moderate {
+        background: $red-500;
+    }
+
+    &.minor {
+        background: $orange-400;
+    }
+
+    &.pass {
+        background: $green-400;
+    }
+}
+
+.report-category-items {
+    list-style: none;
+    padding: 0;
+
+    li {
+        border-bottom: 1px solid $gray-300;
+        padding: 1rem 0;
+    }
+}
+
+.link-offsite {
+    margin-left: 0.5rem;
+
+    svg {
+        width: 1.5rem;
+        margin-top: -0.5rem;
+    }
+}
+
+.help-tooltip {
+    svg {
+        width: 2.2rem;
+        fill: $gray-600;
+        margin-top: -.5rem;
+        margin-left: 0.5rem;
+    }
+}
+
+.tooltip-inner {
+    text-align: left;
+}
+
+.restart-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    border: 0;
+    padding: 0;
+    background: none;
+    appearance: none;
+    transition: transform 300ms ease;
+
+    &:hover,
+    &:focus {
+        transform: rotate(180deg);
+    }
+
+    svg {
+        fill: $gray-600;
+    }
+}
