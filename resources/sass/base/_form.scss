@@ -9,41 +9,19 @@
 .a11y-website-checker-form {
     width: 100%;
     display: flex;
-
-    .button {
-        color: #121620;
-        background-color: map-get( $theme-colors, primary );
-        font-size: 3rem;
-        border-radius: 0 15px 15px 0;
-
-        svg {
-            width: 32px;
-            margin-top: -5px;
-        }
-    }
-
-    .form-input {
-        flex: 1;
-        border: none;
-        height: 65px;
-        font-size: 3rem;
-        padding: 0 2rem;
-        border-radius: 15px 0 0 15px;
-    }
 }
 
 .a11y-website-checker-loading-bar {
     text-align: center;
-    color: white;
     outline: none;
 
     img {
-        width: 150px;
+        width: 60px;
         display: block;
         margin: 0 auto 2rem auto;
     }
+}
 
-    .loading-text {
-        font-size: 2.4rem;
-    }
+.instructions {
+    margin-bottom: 4rem;
 }

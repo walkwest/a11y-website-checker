@@ -1,30 +1,17 @@
 .a11y-website-checker-results {
-    min-height: 100vh;
-    padding: 5rem 0;
+    padding: 0 0 5rem 0;
 
     &.shown {
         display: block !important;
     }
 }
 
-.a11y-website-checker-report {
-    background: white;
-    border-radius: 18px;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
 .report-header {
-    background: linear-gradient(173deg, #ff7062 0%, #ae4b42 100%);
-    //background: linear-gradient(173deg, #225386 0%, #214193 100%);
-    color: white;
-    font-size: 2rem;
-    padding: 2rem;
+    background: #eee;
     text-align: center;
+    font-size: 2rem;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 15px 15px 0 0;
+    padding: 2rem;
 }
 
 .report-body {
@@ -45,16 +32,17 @@
     box-shadow: 0 0 30px rgba(0,0,0,0.2);
     z-index: 5;
 
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
     @include media-breakpoint-up(lg) {
         width: 50%;
     }
 }
 
 .results-overview-content {
-    background: white;
-    border-radius: 0 15px 15px 0;
-    border-top: 10px solid white;
-    border-bottom: 10px solid white;
     padding: 4rem;
     position: relative;
     width: 100%;
@@ -62,17 +50,14 @@
     .score-perfect &,
     .score-good & {
         color: $teal-600;
-        border-top-color: currentColor;
     }
 
     .score-average & {
         color: #b44e44;
-        border-top-color: currentColor;
     }
 
     .score-bad & {
         color: $red-500;
-        border-top-color: currentColor;
     }
 }
 
@@ -98,7 +83,6 @@
 
 .report-category-dropdown-button {
     width: 100%;
-    border-radius: 50px;
     padding: 1rem 2rem;
     text-align: left;
     position: relative;

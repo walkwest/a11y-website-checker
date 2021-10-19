@@ -2,154 +2,184 @@
 <html>
 	<head>
 		<title>A11y Website Checker Demo</title>
+
+		<!--
+		Base styling
+		-->
 		<link rel="stylesheet" href="dist/css/styles.css">
+
+		<!--
+		Demo specific styling and fonts
+		-->
+		<link rel="stylesheet" href="dist/css/demo.css">
 		<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;600;900&amp;display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<div class="module module-a11y-checker">
 
-			<!--
-			Initial Form Screen
-			-->
-			<div id="a11yFormScreen" class="a11y-form-screen shown">
-				<div class="module-a11y-checker-container module-a11y-checker-container--narrow">
-					<header class="module-header">
-						<h1>Test Your Site&#8217;s Accessibility</h1>
-						<p class="instructions">Enter your URL for a free accessibility scan. This audit will quickly determine if your website meets basic legal standards.</p>
-					</header>
-					<form class="a11y-website-checker-form shown" id="a11yWebsiteChecker">
-						<input type="text" value="" class="form-input" placeholder="Enter a website url..." />
-						<button class="button button--primary form-submit" id="a11yWebsiteCheckerBtn">
-							<span class="visually-hidden">Scan now</span>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" x="0px" y="0px"><path d="M67.34,15.9a3.55,3.55,0,1,0-5,5L87.85,46.44H3.53a3.56,3.56,0,0,0,0,7.11H87.85L62.3,79.06a3.62,3.62,0,0,0,0,5,3.53,3.53,0,0,0,5,0l31.6-31.6a3.47,3.47,0,0,0,0-5Z" fill="currentColor"/></svg>
-						</button>
-					</form>
-				</div>
+		<!--
+		Initial Form Screen
+		-->
+		<div id="a11yFormScreen" class="a11y-form-screen shown">
+			<div class="module-a11y-checker-container module-a11y-checker-container--narrow">
+				<header class="module-header">
+					<h1>Test Your Site&#8217;s Accessibility</h1>
+					<p class="instructions">Enter your URL for a free accessibility scan. This audit will quickly determine if your website meets basic legal standards.</p>
+				</header>
+				<form class="a11y-website-checker-form shown" id="a11yWebsiteChecker">
+					<input type="text" value="" class="form-input" placeholder="Enter a website url to test..." />
+					<button class="button button--primary form-submit" id="a11yWebsiteCheckerBtn">
+						<span class="visually-hidden">Scan now</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" x="0px" y="0px"><path d="M67.34,15.9a3.55,3.55,0,1,0-5,5L87.85,46.44H3.53a3.56,3.56,0,0,0,0,7.11H87.85L62.3,79.06a3.62,3.62,0,0,0,0,5,3.53,3.53,0,0,0,5,0l31.6-31.6a3.47,3.47,0,0,0,0-5Z" fill="currentColor"/></svg>
+					</button>
+				</form>
 			</div>
+		</div>
 
-			<!--
-			Loading Bar
-			-->
-			<div class="a11y-website-checker-loading-bar" aria-live="polite" tabindex="0" style="display:none">
-				<img src="resources/images/loading.svg" alt="loading" aria-hidden="true" />
-				<span class="loading-text" id="loadingText">Warming up the scanner...</span>
-			</div>
+		<!--
+		Loading Bar
+		-->
+		<div class="a11y-website-checker-loading-bar" aria-live="polite" tabindex="0" style="display:none">
+			<img src="resources/images/loading.svg" alt="loading" aria-hidden="true" />
+			<span class="loading-text" id="loadingText">Warming up the scanner...</span>
+		</div>
 
-			<!--
-			Results Screen
-			-->
-			<div id="a11yResults" class="a11y-website-checker-results" style="display:none">
-				<div class="module-a11y-checker-container">
+		<!--
+		Results Screen
+		-->
+		<div id="a11yResults" class="a11y-website-checker-results" style="display:none">
+			<div class="module-a11y-checker-container">
 
-					<header class="module-header">
-						<h1>Your Accessibility Report</h1>
-						<div class="results-website-name"></div>
-					</header>
+				<header class="module-header">
+					<h1>Your Accessibility Report</h1>
+					<div class="results-website-name"></div>
+				</header>
 
-					<div class="results-overview">
-						<div class="results-overview-image">
-							<img src="" alt="screenshot" />
+				<div class="results-overview">
+					<div class="results-overview-image">
+						<img src="" alt="screenshot" />
+					</div>
+					<div class="results-overview-content" tabindex="0">
+						<div class="results-score"></div>
+						<div>
+							<span class="results-description"></span>
+							<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="100% &ndash; Perfect<br>100%&ndash;90% &ndash; Above Average<br>90%&ndash;80% &ndash; Average<br>80% lower &ndash; Below Average">
+								<span class="visually-hidden">Help</span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
+							</span>
 						</div>
-						<div class="results-overview-content" tabindex="0">
-							<div class="results-score"></div>
-							<div>
-								<span class="results-description"></span>
-								<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="100% - Perfect<br>100%–90% - Above Average<br>90%-80% - Average<br>80% lower - Below Average">
+						<button class="restart-button" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Start Over" onclick="javascript:location.reload()">
+							<span class="visually-hidden">start over</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path d="M20.944 12.979c-.489 4.509-4.306 8.021-8.944 8.021-2.698 0-5.112-1.194-6.763-3.075l1.245-1.633c1.283 1.645 3.276 2.708 5.518 2.708 3.526 0 6.444-2.624 6.923-6.021h-2.923l4-5.25 4 5.25h-3.056zm-15.864-1.979c.487-3.387 3.4-6 6.92-6 2.237 0 4.228 1.059 5.51 2.698l1.244-1.632c-1.65-1.876-4.061-3.066-6.754-3.066-4.632 0-8.443 3.501-8.941 8h-3.059l4 5.25 4-5.25h-2.92z"/></svg>
+						</button>
+					</div>
+				</div>
+
+				<div class="instructions"></div>
+
+				<div class="a11y-website-checker-report">
+					<header class="report-header">
+						Results
+					</header>
+
+					<div class="report-body">
+						<div class="report-category">
+							<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#violations" aria-expanded="true" aria-controls="violations">
+								Violations
+								<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page failed the WCAG 2.1 AA testing criteria">
 									<span class="visually-hidden">Help</span>
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
 								</span>
-							</div>
-							<button class="restart-button" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Start Over" onclick="javascript:location.reload()">
-								<span class="visually-hidden">start over</span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path d="M20.944 12.979c-.489 4.509-4.306 8.021-8.944 8.021-2.698 0-5.112-1.194-6.763-3.075l1.245-1.633c1.283 1.645 3.276 2.708 5.518 2.708 3.526 0 6.444-2.624 6.923-6.021h-2.923l4-5.25 4 5.25h-3.056zm-15.864-1.979c.487-3.387 3.4-6 6.92-6 2.237 0 4.228 1.059 5.51 2.698l1.244-1.632c-1.65-1.876-4.061-3.066-6.754-3.066-4.632 0-8.443 3.501-8.941 8h-3.059l4 5.25 4-5.25h-2.92z"/></svg>
 							</button>
+							<div class="collapse show" id="violations">
+								<div class="report-category-dropdown-body">
+									<ul class="report-category-items"></ul>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="instructions"></div>
-
-					<div class="a11y-website-checker-report">
-						<header class="report-header">
-							Results
-						</header>
-
-						<div class="report-body">
-							<div class="report-category">
-								<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#violations" aria-expanded="true" aria-controls="violations">
-									Violations
-									<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page failed the WCAG 2.1 AA testing criteria">
-										<span class="visually-hidden">Help</span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
-									</span>
-								</button>
-								<div class="collapse show" id="violations">
-									<div class="report-category-dropdown-body">
-										<ul class="report-category-items"></ul>
-									</div>
+						<div class="report-category">
+							<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#passes" aria-expanded="false" aria-controls="passes">
+								Passes
+								<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page passed the WCAG 2.1 AA testing criteria">
+									<span class="visually-hidden">Help</span>
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
+								</span>
+							</button>
+							<div class="collapse show" id="passes">
+								<div class="report-category-dropdown-body">
+									<ul class="report-category-items"></ul>
 								</div>
 							</div>
+						</div>
 
-							<div class="report-category">
-								<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#passes" aria-expanded="false" aria-controls="passes">
-									Passes
-									<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page passed the WCAG 2.1 AA testing criteria">
-										<span class="visually-hidden">Help</span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
-									</span>
-								</button>
-								<div class="collapse show" id="passes">
-									<div class="report-category-dropdown-body">
-										<ul class="report-category-items"></ul>
-									</div>
-								</div>
-							</div>
-
-							<div class="report-category">
-								<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#incomplete" aria-expanded="false" aria-controls="incomplete">
-									Needs Review
-									<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page require further testing">
-										<span class="visually-hidden">Help</span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
-									</span>
-								</button>
-								<div class="collapse show" id="incomplete">
-									<div class="report-category-dropdown-body">
-										<ul class="report-category-items"></ul>
-									</div>
+						<div class="report-category">
+							<button class="report-category-dropdown-button button dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#incomplete" aria-expanded="false" aria-controls="incomplete">
+								Needs Review
+								<span class="help-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" title="These elements on your web page require further testing">
+									<span class="visually-hidden">Help</span>
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/></svg>
+								</span>
+							</button>
+							<div class="collapse show" id="incomplete">
+								<div class="report-category-dropdown-body">
+									<ul class="report-category-items"></ul>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
+
 			</div>
-
-			<script type="text/javascript">
-                var wwA11yVars = {
-                    resultsText: {
-                        perfect: {
-							label: 'Perfect',
-							text: 'Amazing! Your website scored <b>a perfect score</b>! Nothing more to do at the moment.',
-						},
-                        good: {
-							label: 'Above Average',
-							text: 'Congratulations! That is one nice looking website! Your website scored <b>above average</b>! However, there are still a few areas for improvement. See the full list of results below for areas you can improve.',
-						},
-						average: {
-							label: 'Average',
-							text: 'Not Bad! Your website scored <b>average</b>. However, have no fear! We can improve this! See the full list of results below for areas you can improve.',
-						},
-						bad: {
-							label: 'Below Average',
-							text: 'Oh no! Unfortunately, your website scored <b>below average</b>. However, have no fear! We can improve this! See the full list of results below for areas you can improve.',
-						},
-                    },
-                };
-			</script>
-
 		</div>
+
+		<!--
+		Score specific messages.
+		Customize the text and label values as desired.
+		-->
+		<script type="text/javascript">
+			var wwA11yVars = {
+				resultsText: {
+					perfect: {
+						label: 'Perfect',
+						text: 'Amazing! Your website scored <b>a perfect score</b>! Nothing more to do at the moment.',
+					},
+					good: {
+						label: 'Above Average',
+						text: 'Congratulations! That is one nice looking website! Your website scored <b>above average</b>! However, there are still a few areas for improvement. See the full list of results below for areas you can improve.',
+					},
+					average: {
+						label: 'Average',
+						text: 'Not Bad! Your website scored <b>average</b>. However, have no fear! We can improve this! See the full list of results below for areas you can improve.',
+					},
+					bad: {
+						label: 'Below Average',
+						text: 'Oh no! Unfortunately, your website scored <b>below average</b>. However, have no fear! We can improve this! See the full list of results below for areas you can improve.',
+					},
+				},
+			};
+		</script>
+
+		<!--
+		Required scripts
+		-->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript" defer=""></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 		<script src="resources/js/scripts.js" type="text/javascript" defer=""></script>
+
+		<!--
+		Demo only scripts
+		-->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			/**
+			 * Bootstrap Tooltips
+			 */
+			const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			const tooltipList = tooltipTriggerList.map( (tooltipTriggerEl) => {
+				return new bootstrap.Tooltip(tooltipTriggerEl, {
+					html: true,
+				});
+			});
+		</script>
+
 	</body>
 </html>

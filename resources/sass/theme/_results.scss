@@ -1,0 +1,45 @@
+.a11y-website-checker-report {
+    background: white;
+    border-radius: 18px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.a11y-website-checker-results {
+    min-height: 100vh;
+    padding-top: 5rem;
+}
+
+.report-header {
+    background: linear-gradient(173deg, #ff7062 0%, #ae4b42 100%);
+    //background: linear-gradient(173deg, #225386 0%, #214193 100%);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 15px 15px 0 0;
+}
+
+.report-category-dropdown-button {
+    width: 100%;
+    border-radius: 50px;
+}
+
+.results-overview-content {
+    background: white;
+    border-radius: 0 15px 15px 0;
+    border-top: 10px solid white;
+    border-bottom: 10px solid white;
+
+    .score-perfect &,
+    .score-good & {
+        border-top-color: currentColor;
+    }
+
+    .score-average & {
+        border-top-color: currentColor;
+    }
+
+    .score-bad & {
+        border-top-color: currentColor;
+    }
+}

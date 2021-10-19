@@ -1,9 +1,6 @@
-@import 'base/variables';
+@import './node_modules/bootstrap/scss/functions';
+@import './node_modules/bootstrap/scss/variables';
+@import './node_modules/bootstrap/scss/mixins';
 
-@import './node_modules/bootstrap/scss/bootstrap';
-
-@import 'base/base';
-@import 'base/components';
 @import 'base/form';
-@import 'base/layout';
 @import 'base/results';

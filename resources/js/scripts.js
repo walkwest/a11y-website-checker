@@ -230,8 +230,11 @@ A11yWebsiteChecker.prototype = {
      * Kick off the analysis with an ajax request to the server.
      */
     runAnalysis(url) {
+        const localServer = 'http://localhost:3000';
+        const server = 'https://api.walkwest.com';
+
         // do ajax request to server to scrape website and return html
-        $.ajax( 'http://localhost:3000/accessibility/scan/' + encodeURIComponent(url), {
+        $.ajax( localServer + '/accessibility/scan/' + encodeURIComponent(url), {
             method: 'GET',
         }).done((data) => {
             this.appHasError = false;
@@ -285,15 +288,5 @@ $(document).ready(function() {
      * @type {A11yWebsiteChecker}
      */
     window.A11yWebsiteChecker = App;
-
-    /**
-     * Bootstrap Tooltips
-     */
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    const tooltipList = tooltipTriggerList.map( (tooltipTriggerEl) => {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
-            html: true,
-        });
-    });
 
 });
