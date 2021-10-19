@@ -234,7 +234,7 @@ A11yWebsiteChecker.prototype = {
         const server = 'https://api.walkwest.com';
 
         // do ajax request to server to scrape website and return html
-        $.ajax( localServer + '/accessibility/scan/' + encodeURIComponent(url), {
+        $.ajax( server + '/accessibility/scan/' + encodeURIComponent(url), {
             method: 'GET',
         }).done((data) => {
             this.appHasError = false;
