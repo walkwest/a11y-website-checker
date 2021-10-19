@@ -11,17 +11,29 @@ This tool requires 2 parts:
 
 **Do I have to have my own API?**
 
-Well, running an accessibility testing suite on a 3rd party website not your own (through a UI interface like this) turns out to be a pretty difficult task. There are APIs out there you can use, but most of them require a paid subscription. So we ended up writing [our own](https://github.com/walkwest/a11y-audit-server) :muscle:. Feel free to use the library, but you'll need to install it on a server of your own!
+Well, as it turns out, running an accessibility testing suite on a 3rd party website not your own (through a UI interface like this) turns out to be a pretty difficult task. There are APIs out there you can use, but most of them require a paid subscription. So we ended up writing [our own](https://github.com/walkwest/a11y-audit-server) :muscle:. Feel free to use the library, but you'll need to install it on a server of your own!
 
 If you are simply looking to run more localized testing on a website you own or are developing, take a look at some of these other great (free) tools in this [CSS Tricks Article](https://css-tricks.com/accessibility-testing-tools/).
 
 ## How to use
 
 1. Incorporate the html from `index.html` into your webpage
-2. Include Javascript file
-3. Include CSS*
+2. Include `./dist/scripts-min.js` for required javascript
+3. Include `./dist/styles.css` for base level styling
+4. Update the API url in `scripts.js` with your own API url
 
-*\*Demo.css is separate as this is only used for the demo. Style.css is provided*
+*\*Demo.css is separate as this is only used for the demo.*
+
+*\*Currently the demo only works from the domain accessibility.walkwest.com due to a CORS header on the API.*
+
+## Contributing
+
+Asset compilation and minification handled using [Gulp](https://gulpjs.com/). All production ready files are located in the `./dist` folder.
+
+- `gulp sass` - compile only sass
+- `gulp js` - compile only js
+- `gulp watch` - watch for sass changes
+- `gulp` - compile sass and js
 
 ## Limitations
 
